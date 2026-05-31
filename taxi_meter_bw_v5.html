@@ -1,0 +1,257 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Noto+Sans+KR:wght@400;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+.wrap{background:#111;border-radius:10px;padding:14px;max-width:620px;margin:1rem auto;border:2px solid #444;font-family:'Noto Sans KR',sans-serif;display:flex;gap:10px;}
+.lcd{flex:1.4;background:#000;border:2px solid #555;border-radius:6px;padding:10px 12px;display:flex;flex-direction:column;gap:5px;position:relative;}
+.lcd-top{display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#bbb;font-family:'Share Tech Mono',monospace;}
+.badge-8282{border:1px solid #888;padding:1px 6px;border-radius:3px;font-size:11px;color:#ccc;font-weight:700;letter-spacing:1px;}
+.lcd-dist{display:flex;gap:8px;font-size:11px;color:#bbb;font-family:'Share Tech Mono',monospace;}
+.call-label{font-size:9px;color:#aaa;text-align:right;line-height:1.3;}
+.fare-main{display:flex;align-items:flex-end;gap:6px;margin:4px 0;}
+.mode-pill{background:#fff;color:#000;font-size:12px;font-weight:700;padding:4px 8px;border-radius:3px;white-space:nowrap;flex-shrink:0;border:1px solid #ccc;}
+.roller-wrap{display:flex;align-items:flex-end;overflow:hidden;flex:1;}
+.digit-col{display:flex;flex-direction:column;height:58px;overflow:hidden;}
+.digit-col .reel{display:flex;flex-direction:column;will-change:transform;}
+.digit-col .reel span{display:block;height:58px;line-height:58px;font-size:50px;font-family:'Share Tech Mono',monospace;font-weight:bold;color:#fff;text-align:center;width:34px;}
+.won-unit{font-size:12px;color:#ccc;margin-bottom:6px;line-height:1.3;font-family:'Share Tech Mono',monospace;}
+.receipt-no{font-size:9px;color:#666;font-family:'Share Tech Mono',monospace;margin-top:2px;}
+.btn-bar{display:flex;gap:4px;margin-top:auto;padding-top:8px;}
+.m-btn{flex:1;padding:6px 2px;font-size:12px;font-weight:700;border-radius:4px;border:1px solid #555;cursor:pointer;font-family:'Noto Sans KR',sans-serif;text-align:center;background:#222;color:#fff;transition:background .2s,color .2s;}
+#mb-주행{background:#333;color:#777;border-color:#444;}
+#mb-주행.active{background:#cc0000;color:#fff;border-color:#cc0000;}
+.keypad{width:148px;background:#1a1a1a;border:2px solid #555;border-radius:6px;padding:8px;display:flex;flex-direction:column;gap:5px;}
+.kp-header{font-size:11px;color:#999;font-family:'Share Tech Mono',monospace;text-align:center;letter-spacing:1px;}
+.kp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
+.kp-btn{background:#2a2a2a;border:1px solid #555;border-radius:4px;color:#ddd;font-size:14px;font-weight:700;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:'Share Tech Mono',monospace;}
+.kp-btn:hover{background:#3a3a3a;}
+.kp-btn.label{font-size:10px;font-family:'Noto Sans KR',sans-serif;color:#bbb;}
+#kp-시외{background:#2a2a2a;color:#ddd;border-color:#555;transition:background .2s,color .2s;}
+#kp-시외.active{background:#cc0000;color:#fff;border-color:#cc0000;}
+.ctrl-panel{max-width:620px;margin:0 auto 1rem;background:#1a1a1a;border:1px solid #444;border-radius:8px;padding:12px;font-family:'Noto Sans KR',sans-serif;}
+.ctrl-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px;}
+.ctrl-label{font-size:11px;color:#999;min-width:72px;}
+.ctrl-input{background:#000;border:1px solid #555;border-radius:4px;color:#fff;font-family:'Share Tech Mono',monospace;font-size:12px;padding:5px 8px;flex:1;min-width:180px;}
+.ctrl-input:focus{outline:none;border-color:#aaa;}
+.speed-btns{display:flex;gap:4px;}
+.sp-btn{background:#222;border:1px solid #555;border-radius:4px;color:#aaa;font-size:11px;padding:4px 9px;cursor:pointer;font-family:'Share Tech Mono',monospace;}
+.sp-btn.sel{background:#fff;color:#000;border-color:#fff;}
+.action-btns{display:flex;gap:6px;margin-top:4px;}
+.a-btn{background:#222;border:1px solid #666;border-radius:5px;color:#ccc;padding:6px 14px;font-size:12px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.a-btn.start{border-color:#fff;color:#fff;}
+.a-btn:hover{background:#333;}
+.speed-hint{font-size:10px;color:#666;margin-top:4px;font-family:'Share Tech Mono',monospace;}
+</style>
+
+<h2 class="sr-only" style="position:absolute;left:-9999px">콜택시 미터기 시뮬레이터</h2>
+
+<div class="wrap">
+  <div style="flex:1.4;display:flex;flex-direction:column;gap:8px;">
+    <div class="lcd">
+      <div class="lcd-top">
+        <span class="badge-8282">8282</span>
+        <div class="lcd-dist"><span>12.</span><span>0.078</span></div>
+        <div class="call-label">호출<br>요금<br>(CALL)</div>
+      </div>
+      <div class="fare-main">
+        <div class="mode-pill" id="mode-pill">주행</div>
+        <div class="roller-wrap" id="roller"></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;margin-bottom:4px;">
+          <div class="won-unit">원<br><span style="font-size:8px">(WON)</span></div>
+          <svg width="20" height="36" viewBox="0 0 20 36" xmlns="http://www.w3.org/2000/svg" aria-label="역십자가">
+            <rect x="7.5" y="0" width="5" height="22" rx="1" fill="#d4af37" stroke="#8B6914" stroke-width="0.4"/>
+            <rect x="0" y="22" width="20" height="6" rx="1" fill="#d4af37" stroke="#8B6914" stroke-width="0.4"/>
+            <rect x="7.5" y="28" width="5" height="8" rx="0" fill="#d4af37" stroke="#8B6914" stroke-width="0.4"/>
+            <rect x="9.5" y="1" width="1.5" height="34" fill="#fff" opacity="0.18"/>
+            <rect x="1" y="23.5" width="18" height="2" fill="#fff" opacity="0.18"/>
+          </svg>
+        </div>
+      </div>
+      <div class="receipt-no">No <span>T303822</span></div>
+      <div class="btn-bar">
+        <div class="m-btn" onclick="modeClick('빈차')">빈차</div>
+        <div class="m-btn" id="mb-주행">주행</div>
+        <div class="m-btn" onclick="modeClick('할증')">할증</div>
+        <div class="m-btn" onclick="modeClick('지불')">지불</div>
+        <div class="m-btn" onclick="modeClick('복합')">복합</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="keypad">
+    <div class="kp-header">GIT-SM</div>
+    <div class="kp-grid">
+      <div class="kp-btn">1</div><div class="kp-btn">2</div><div class="kp-btn">3</div>
+      <div class="kp-btn">4</div><div class="kp-btn">5</div><div class="kp-btn">6</div>
+      <div class="kp-btn">7</div><div class="kp-btn">8</div><div class="kp-btn">9</div>
+    </div>
+    <div class="kp-grid">
+      <div class="kp-btn label">인쇄</div>
+      <div class="kp-btn">0</div>
+      <div class="kp-btn label">취소</div>
+    </div>
+    <div class="kp-grid" style="grid-template-columns:1fr 1fr;">
+      <div class="kp-btn label" style="height:28px;font-size:10px;">메뉴</div>
+      <div class="kp-btn label" style="height:28px;font-size:10px;">대기</div>
+      <div class="kp-btn label" style="height:28px;font-size:10px;">설정</div>
+      <div class="kp-btn label" id="kp-시외" style="height:28px;font-size:10px;" onclick="toggleSioe()">시외</div>
+    </div>
+  </div>
+</div>
+
+<div class="ctrl-panel">
+  <div class="ctrl-row">
+    <span class="ctrl-label">요금 입력</span>
+    <input class="ctrl-input" id="fare-input" type="text" placeholder="예: 10500,11000,11500" value="10500,11000,11500,12000,12500"/>
+  </div>
+  <div class="ctrl-row">
+    <span class="ctrl-label">올라가는 속도</span>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div class="speed-btns">
+        <div class="sp-btn" onclick="setSpeed(this,0)">1단</div>
+        <div class="sp-btn" onclick="setSpeed(this,1)">2단</div>
+        <div class="sp-btn sel" onclick="setSpeed(this,2)">3단</div>
+        <div class="sp-btn" onclick="setSpeed(this,3)">4단</div>
+        <div class="sp-btn" onclick="setSpeed(this,4)">5단</div>
+      </div>
+      <div class="speed-hint" id="speed-hint">3단 — 700ms 간격 (최속 기준)</div>
+    </div>
+  </div>
+  <div class="action-btns">
+    <div class="a-btn start" onclick="startMeter()">▶ 미터 시작</div>
+    <div class="a-btn" onclick="arrive()">■ 도착</div>
+    <div class="a-btn" onclick="resetMeter()">↺ 초기화</div>
+  </div>
+</div>
+
+<script>
+// 3단(index 2) = 700ms 최속
+// 1단(index 0) = 3단 속도의 원래 1단(3500ms) 수준
+// 1~3단 구간을 5단계로 균등 분할: 3500, 2450, 1400(=중간값 미사용), ...
+// 정확히: 1단=3500, 2단=2275, 3단=700 → 그 사이를 선형 보간 5단계
+// 실제로 1단~3단 사이 = 3500ms ~ 700ms 구간을 4등분 → 각 단 700ms씩 추가
+// 5단계: 3500 / 2450 / 700 / 420 / 210  (3단이 가장 빠른 기준, 4·5단은 더 빠름 X)
+// 요청 재해석: "지금 1~3단 사이를 5개로" → 기존 1단(3500)~3단(700) 구간을 5단계로 나눔
+// 즉 5단계 모두 700ms~3500ms 범위 안에 있고, 5단이 700ms(최속=기존 3단)
+
+const SPEED_LEVELS = [3500, 2450, 1575, 1050, 700];
+// 1단=3500(가장 느림), 5단=700(가장 빠름=기존 3단)
+const SPEED_LABELS = ['3500ms — 가장 느림','2450ms','1575ms','1050ms','700ms — 가장 빠름'];
+
+const DIGITS=6;
+let reels=[];
+let currentFare=10000;
+let fareQueue=[];
+let qIdx=0;
+let rollTimer=null;
+let speedMs=700;
+let isRunning=false;
+let sioeOn=false;
+
+function buildRoller(){
+  const c=document.getElementById('roller');
+  c.innerHTML='';reels=[];
+  for(let i=0;i<DIGITS;i++){
+    const col=document.createElement('div');col.className='digit-col';
+    const reel=document.createElement('div');reel.className='reel';
+    for(let r=0;r<3;r++) for(let d=0;d<=9;d++){
+      const s=document.createElement('span');s.textContent=d;reel.appendChild(s);
+    }
+    col.appendChild(reel);c.appendChild(col);
+    reels.push({col,reel,cur:0});
+  }
+}
+
+function getDigits(n){
+  return String(Math.round(n)).padStart(DIGITS,'0').split('').map(Number);
+}
+
+function snapTo(n){
+  const digits=getDigits(n);
+  reels.forEach((r,i)=>{
+    r.cur=digits[i];
+    r.reel.style.transition='none';
+    r.reel.style.transform=`translateY(${-digits[i]*58}px)`;
+  });
+}
+
+function rollTo(target,onDone){
+  const from=getDigits(currentFare);
+  const to=getDigits(target);
+  let pending=0;let settled=false;
+  reels.forEach((r,i)=>{
+    let fd=from[i],td=to[i];
+    if(fd===td) return;
+    pending++;
+    let steps=(td-fd+10)%10;if(steps===0)steps=10;
+    const dur=Math.min(steps*55,480);
+    r.reel.style.transition=`transform ${dur}ms cubic-bezier(.15,.85,.35,1)`;
+    r.reel.style.transform=`translateY(${-(fd+steps)*58}px)`;
+    function h(){
+      r.reel.removeEventListener('transitionend',h);
+      r.cur=td;r.reel.style.transition='none';
+      r.reel.style.transform=`translateY(${-td*58}px)`;
+      pending--;
+      if(pending===0&&!settled){settled=true;if(onDone)onDone();}
+    }
+    r.reel.addEventListener('transitionend',h);
+  });
+  currentFare=target;
+  if(pending===0&&onDone) onDone();
+}
+
+function modeClick(m){document.getElementById('mode-pill').textContent=m;}
+
+function setDrivingActive(on){
+  const b=document.getElementById('mb-주행');
+  if(on)b.classList.add('active');else b.classList.remove('active');
+}
+
+function toggleSioe(){
+  sioeOn=!sioeOn;
+  const btn=document.getElementById('kp-시외');
+  if(sioeOn)btn.classList.add('active');else btn.classList.remove('active');
+}
+
+function setSpeed(el,idx){
+  speedMs=SPEED_LEVELS[idx];
+  document.querySelectorAll('.sp-btn').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('speed-hint').textContent=`${idx+1}단 — ${SPEED_LABELS[idx]}`;
+}
+
+// 초기 힌트: 5단(index 4) 선택 상태로 시작 — 3단이 최속이라는 요청 반영
+// 기본 선택: 5단(700ms) = 가장 빠름
+(function initSpeed(){
+  speedMs=SPEED_LEVELS[4];
+  const btns=document.querySelectorAll('.sp-btn');
+  btns.forEach(b=>b.classList.remove('sel'));
+  btns[4].classList.add('sel');
+  document.getElementById('speed-hint').textContent=`5단 — ${SPEED_LABELS[4]}`;
+})();
+
+function startMeter(){
+  if(isRunning)return;
+  const raw=document.getElementById('fare-input').value;
+  fareQueue=[10000,...raw.split(',').map(s=>parseInt(s.trim(),10)).filter(n=>!isNaN(n)&&n>0)];
+  qIdx=0;isRunning=true;currentFare=10000;snapTo(10000);
+  modeClick('주행');setDrivingActive(true);scheduleNext();
+}
+
+function scheduleNext(){
+  qIdx++;
+  if(qIdx>=fareQueue.length){isRunning=false;return;}
+  rollTimer=setTimeout(()=>rollTo(fareQueue[qIdx],scheduleNext),speedMs);
+}
+
+function arrive(){
+  if(rollTimer){clearTimeout(rollTimer);rollTimer=null;}
+  isRunning=false;setDrivingActive(false);modeClick('지불');
+}
+
+function resetMeter(){
+  arrive();currentFare=10000;snapTo(10000);modeClick('빈차');qIdx=0;
+}
+
+buildRoller();snapTo(10000);
+</script>
