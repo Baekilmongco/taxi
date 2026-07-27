@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Lab 가정통신문 - 2026 여름 MT 안내</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700;900&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ffffff;
+    --paper-edge:#e9e7e0;
+    --ink:#1c1c1c;
+    --navy:#1b2a5e;
+    --navy-deep:#101a3d;
+    --red:#a9312b;
+    --red-soft:#c14b3f;
+    --line:#3a3a3a;
+    --muted:#6b675c;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    background:#f0eee7;
+    font-family:'Noto Serif KR', serif;
+    color:var(--ink);
+    padding:28px 12px 50px;
+  }
+
+  .sheet{
+    max-width:760px;
+    margin:0 auto;
+    background:var(--paper);
+    box-shadow:0 2px 4px rgba(0,0,0,0.08), 0 16px 30px -20px rgba(0,0,0,0.2);
+    padding:34px 40px 38px;
+    position:relative;
+    border:1px solid var(--paper-edge);
+  }
+
+  /* 상단 문서번호/발신 라인 */
+  .doc-meta{
+    display:flex;
+    justify-content:space-between;
+    font-family:'Nanum Gothic', sans-serif;
+    font-size:12.5px;
+    color:var(--muted);
+    letter-spacing:0.02em;
+    border-bottom:1px solid #d8d3c4;
+    padding-bottom:8px;
+    margin-bottom:14px;
+  }
+
+  /* 헤더: 로고 + 발신처 */
+  .letterhead{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:6px;
+  }
+  .letterhead img{
+    width:54px;
+    height:54px;
+    object-fit:contain;
+    flex-shrink:0;
+  }
+  .letterhead .org-kr{
+    font-family:'Nanum Gothic', sans-serif;
+    font-weight:800;
+    font-size:20px;
+    color:var(--navy-deep);
+    letter-spacing:-0.01em;
+  }
+  .letterhead .org-en{
+    font-family:'Nanum Gothic', sans-serif;
+    font-size:11px;
+    letter-spacing:0.14em;
+    color:var(--muted);
+    margin-top:2px;
+  }
+
+  .hairline{
+    height:3px;
+    background:var(--navy-deep);
+    margin:10px 0 3px;
+  }
+  .hairline.thin{
+    height:1px;
+    background:var(--navy-deep);
+    margin:3px 0 16px;
+  }
+
+  /* 제목 */
+  .title-box{
+    text-align:center;
+    margin:4px 0 18px;
+  }
+  .title-eyebrow{
+    font-family:'Nanum Gothic', sans-serif;
+    font-size:12px;
+    letter-spacing:0.3em;
+    color:var(--red);
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .title-main{
+    font-size:27px;
+    font-weight:900;
+    letter-spacing:-0.01em;
+    line-height:1.4;
+  }
+  .title-main .stamp-red{
+    color:var(--red);
+  }
+
+  .greeting{
+    font-size:14.5px;
+    line-height:1.8;
+    margin-bottom:18px;
+    text-indent:1em;
+  }
+  .greeting strong{
+    color:var(--navy-deep);
+  }
+
+  /* 항목 섹션 */
+  .section{
+    margin-bottom:16px;
+  }
+  .section-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:22px;
+    height:22px;
+    background:var(--navy-deep);
+    color:#fff;
+    font-family:'Nanum Gothic', sans-serif;
+    font-weight:800;
+    font-size:13px;
+    border-radius:2px;
+    margin-right:8px;
+    flex-shrink:0;
+  }
+  .section-head{
+    display:flex;
+    align-items:center;
+    font-family:'Nanum Gothic', sans-serif;
+    font-weight:800;
+    font-size:16px;
+    color:var(--navy-deep);
+    margin-bottom:8px;
+    border-bottom:2px solid var(--navy-deep);
+    padding-bottom:5px;
+  }
+  .section-body{
+    font-size:14px;
+    line-height:1.65;
+    padding-left:30px;
+  }
+  .section-body .sub{
+    margin:3px 0;
+  }
+  .section-body a{
+    color:var(--red);
+    text-decoration:underline;
+  }
+  .section-body ul{
+    margin:6px 0 6px 0;
+    padding-left:18px;
+  }
+  .section-body li{
+    margin-bottom:3px;
+  }
+  .kv{
+    display:grid;
+    grid-template-columns:96px 1fr;
+    gap:4px 10px;
+    margin-bottom:4px;
+  }
+  .kv .k{
+    font-family:'Nanum Gothic', sans-serif;
+    font-weight:700;
+    color:var(--navy-deep);
+  }
+
+  .note-red{
+    color:var(--red-soft);
+    font-weight:700;
+  }
+
+  /* 표 */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13px;
+    margin-top:6px;
+  }
+  table.rooms{
+    table-layout:fixed;
+  }
+  table.rooms th, table.rooms td{
+    border:1px solid #9a9484;
+    padding:7px 4px;
+    text-align:center;
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  table.rooms thead th{
+    background:var(--navy-deep);
+    color:#fff;
+    font-family:'Nanum Gothic', sans-serif;
+    font-weight:700;
+  }
+  table.rooms td.room-label{
+    font-family:'Nanum Gothic', sans-serif;
+    font-weight:800;
+    background:#eee8d8;
+    color:var(--navy-deep);
+  }
+  table.rooms col.room-col{
+    width:58px;
+  }
+
+  table.schedule{
+    font-size:12.5px;
+  }
+  table.schedule th, table.schedule td{
+    border:1px solid #9a9484;
+    padding:7px 6px;
+    text-align:center;
+  }
+  table.schedule thead th{
+    background:var(--navy-deep);
+    color:#fff;
+    font-family:'Nanum Gothic', sans-serif;
+    font-weight:700;
+  }
+  table.schedule td.time{
+    font-family:'Nanum Gothic', sans-serif;
+    font-weight:700;
+    color:var(--red);
+    white-space:nowrap;
+  }
+  table.schedule tr.day2{
+    border-top:3px solid var(--navy-deep);
+  }
+  table.schedule td.note{
+    color:var(--muted);
+    font-size:11.5px;
+  }
+  .day-divider{
+    font-family:'Nanum Gothic', sans-serif;
+    font-size:11.5px;
+    font-weight:700;
+    color:#fff;
+    background:var(--red);
+    text-align:center;
+    padding:3px 0;
+  }
+
+  .caution-box{
+    border:2px dashed var(--red);
+    background:#fbeeea;
+    padding:14px 16px;
+    font-size:13.5px;
+    line-height:1.8;
+    margin-top:8px;
+  }
+  .caution-box .cap{
+    font-family:'Nanum Gothic', sans-serif;
+    font-weight:800;
+    color:var(--red);
+    margin-right:6px;
+  }
+
+  /* 맺음말 + 직인 */
+  .closing{
+    margin-top:18px;
+    text-align:center;
+    font-size:14.5px;
+    line-height:1.7;
+  }
+  .closing .date{
+    margin-top:14px;
+    font-family:'Nanum Gothic', sans-serif;
+    letter-spacing:0.05em;
+  }
+  .signoff{
+    position:relative;
+    display:inline-block;
+    margin-top:6px;
+    font-family:'Nanum Gothic', sans-serif;
+    font-weight:800;
+    font-size:17px;
+    color:var(--navy-deep);
+    padding:6px 40px 6px 14px;
+  }
+  .stamp{
+    position:absolute;
+    right:-6px;
+    top:-14px;
+    width:62px;
+    height:62px;
+    border:2.5px solid var(--red);
+    border-radius:50%;
+    color:var(--red);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Nanum Gothic', sans-serif;
+    font-weight:800;
+    font-size:11px;
+    line-height:1.3;
+    text-align:center;
+    transform:rotate(-8deg);
+    opacity:0.85;
+    mix-blend-mode:multiply;
+  }
+
+  @media (max-width:600px){
+    .sheet{padding:26px 20px 40px;}
+    .title-main{font-size:21px;}
+    .section-body{padding-left:12px;}
+    .kv{grid-template-columns:78px 1fr;}
+    table.schedule{font-size:11px;}
+    table.rooms{font-size:11.5px;}
+  }
+
+  @media print{
+    body{background:#fff; padding:0;}
+    .sheet{box-shadow:none; border:none;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="doc-meta">
+    <span> 2026. 7. 27.(월)</span>
+  </div>
+
+  <div class="letterhead">
+    <img src="logo.png" alt="CI Lab 로고">
+    <div>
+      <div class="org-kr">Computational Innovation Lab</div>
+      <div class="org-en">서울대학교 · 전북대학교 연구실 합동 MT 관련 안내</div>
+    </div>
+  </div>
+  <div class="hairline"></div>
+  <div class="hairline thin"></div>
+
+  <div class="title-box">
+    <div class="title-eyebrow">가 정 통 신 문</div>
+    <div class="title-main">2026학년도 여름 <span class="stamp-red">MT</span> 안내</div>
+  </div>
+
+  <p class="greeting">
+    오늘도 긴 미팅 고생하며 참여하신 CI lab 구성원 여러분께 수고하셨다고 말씀을 드리며 MT 관련 안내를 드리고자 합니다.
+    <strong>2026년 8월 3일(월)부터 4일(화)까지 1박 2일간 여름 MT</strong>를 실시하고자 하니,
+    아래 내용을 확인하시어 준비에 착오가 없으시기 바랍니다. 랜덤으로 배정되는 팀전과 방배정이 있으니
+    마음의 준비도 함께 부탁드립니다.
+  </p>
+
+  <div class="section">
+    <div class="section-head"><span class="section-num">1</span>일시 및 장소</div>
+    <div class="section-body">
+      <div class="kv"><span class="k">일 시</span><span>2026년 8월 3일(월) ~ 4일(화), 1박 2일</span></div>
+      <div class="kv"><span class="k">장 소</span><span><a href="https://www.dpv.co.kr/room/257" target="_blank" rel="noopener">건축학개론 풀빌라 펜션</a> — 경기 안산시 단원구 부흥로 287-138 (대부남동)</span></div>
+      <div class="kv"><span class="k">총 집합</span><span>13:00, 점심 식사 장소(백년손님)</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><span class="section-num">2</span>참가 인원</div>
+    <div class="section-body">
+      전북대 9명 + 서울대 19명 + 갓 돌 지난 재이 1명 = <strong>총 29명</strong> (지도교수님 포함)
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><span class="section-num">3</span>서울대 인원 이동 안내</div>
+    <div class="section-body">
+      <div class="kv"><span class="k">집 합</span><span>오전 11:40 / 서울대학교 정문</span></div>
+      <div class="kv"><span class="k">이동 시간</span><span>약 1시간 (→ 점심 식사 장소 · 백년손님)</span></div>
+      <div class="kv"><span class="k">이동 방법</span><span>차 (운전 : 옥준용님, 최세영님)</span></div>
+      <ul>
+        <li>옥준용님 차 (5인승) — 윤영 +α</li>
+        <li>최세영님 차 (9인승, 카니발) — 원호 +α &nbsp;<span class="note-red">※ 렌트 완료</span></li>
+      </ul>
+      <div class="sub">탑승은 자율적으로 <strong>선착순</strong> 진행됩니다.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><span class="section-num">4</span>방 배정 안내</div>
+    <div class="section-body">
+      <div class="sub">침대방 1(교수님 부부 + 재이) + 침대방 1 · 온돌방 5(인당 4인)로 배정됩니다.</div>
+      <table class="rooms">
+        <colgroup>
+          <col class="room-col">
+          <col><col><col><col>
+        </colgroup>
+        <thead><tr><th>구분</th><th colspan="4">배정 인원</th></tr></thead>
+        <tbody>
+          <tr><td class="room-label">방 1</td><td>택호 교수님</td><td>최세영</td><td>손원호 박사님</td><td>김휘중</td></tr>
+          <tr><td class="room-label">방 2</td><td>김동현</td><td>옥준용</td><td>박준하</td><td>박서현</td></tr>
+          <tr><td class="room-label">방 3</td><td>소현 교수님</td><td>김예진</td><td>장다희</td><td>하이연</td></tr>
+          <tr><td class="room-label">방 4</td><td>김윤영</td><td>허나영</td><td>박예진</td><td>김소현</td></tr>
+          <tr><td class="room-label">방 5</td><td>조삼연 박사님</td><td>이승진</td><td>양우경</td><td>박정훈</td></tr>
+          <tr><td class="room-label">방 6</td><td>곽예지</td><td>김유라</td><td>장예진</td><td>최해인</td></tr>
+        </tbody>
+      </table>
+      <div class="sub" style="margin-top:8px;">※ 방 배정은 임의로 이루어졌습니다. 변경이 필요하신 분은 개인적으로 1:1 교환해 주세요.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><span class="section-num">5</span>세부 일정표</div>
+    <div class="section-body" style="padding-left:0;">
+      <div class="day-divider">1일차 · 8월 3일(월)</div>
+      <table class="schedule">
+        <thead><tr><th style="width:60px;">시간</th><th style="width:100px;">일정</th><th>장소</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td class="time">11:00</td><td>렌트카 대여</td><td>미정</td><td class="note"></td></tr>
+          <tr><td class="time">11:40</td><td>집합 및 인원 확인</td><td>서울대 정문</td><td class="note"></td></tr>
+          <tr><td class="time">13:00</td><td>점심 식사</td><td>백년손님</td><td class="note">쭈꾸미볶음 (예약완료)</td></tr>
+          <tr><td class="time">14:00</td><td>(숙소팀) 숙소 도착 / (장보기팀) 장 보기</td><td>펜션 / 하나로마트 군자농협대부점</td><td class="note"></td></tr>
+          <tr><td class="time">15:30</td><td>단체 게임 (팀전)</td><td>펜션</td><td class="note">팀 랜덤 배정</td></tr>
+          <tr><td class="time">16:30</td><td>자유시간</td><td>펜션</td><td class="note">물놀이 · 노래방 · 당구장 · 탁구장</td></tr>
+          <tr><td class="time">18:00</td><td>저녁 식사 세팅</td><td>펜션</td><td class="note">술게임</td></tr>
+        </tbody>
+      </table>
+      <div class="day-divider" style="margin-top:10px;">2일차 · 8월 4일(화)</div>
+      <table class="schedule">
+        <thead><tr><th style="width:60px;">시간</th><th style="width:100px;">일정</th><th>장소</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td class="time">11:00</td><td>체크아웃</td><td>펜션</td><td class="note"></td></tr>
+          <tr><td class="time">11:30</td><td>점심 식사</td><td>뼈다구싸다구</td><td class="note">식사 후 해산</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><span class="section-num">6</span>준비물 및 유의사항</div>
+    <div class="section-body">
+      <div class="kv"><span class="k">준비물</span><span>물놀이용 여벌 옷, 수건, 충전기 등 개인 물품</span></div>
+      <div class="caution-box">
+        <span class="cap">유의사항</span>단체 게임 팀 배분은 <strong>무작위(랜덤)</strong>로 진행되니, 내향인 여러분들께서는 마음의 각오를 단단히 하고 오시기 바랍니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="closing">
+    위 사항을 참고하시어 안전하고 즐거운 여름 MT가 되시기를 바랍니다!
+    <div class="date">2026. 7. 27.</div>
+    <div class="signoff">
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
